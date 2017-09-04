@@ -12,6 +12,7 @@ gem 'puma', '~> 3.7'
 gem 'active_model_serializers'
 gem 'bcrypt', '~> 3.1.7'
 gem 'rack-cors'
+gem 'httparty'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
