@@ -38,6 +38,12 @@ class MoviesController < ApplicationController
     @movie.destroy
   end
 
+  def get_movies
+    response = HTTParty.get("https://api.themoviedb.org/3/search/movie?api_key=8d027704c57524153a0af2b38415ac45&query=#{params["query"]}")
+    results = JSON.parse(response.body)['results']
+    render json: results, status: :ok
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_movie
