@@ -15,12 +15,15 @@ class MoviesController < ApplicationController
 
   # POST /movies
   def create
-    @movie = Movie.new(movie_params)
+    @movie = Movie.find_or_initialize_by(movie_api_id: movie_params[:movie_api_id])
 
-    if @movie.save
-      render json: @movie, status: :created, location: @movie
-    else
-      render json: @movie.errors, status: :unprocessable_entity
+    if @movie.new_record?
+      @movie = Movie.new(movie_params)
+      if @movie.save
+        render json: @movie, status: :created, location: @movie
+      else
+        render json: @movie.errors, status: :unprocessable_entity
+      end
     end
   end
 
@@ -44,6 +47,12 @@ class MoviesController < ApplicationController
     render json: results, status: :ok
   end
 
+  def find_movie_by_api_id
+    # @movie = Movie.where(movie_api_id: params["movie_api_id"]).first
+    @movie = Movie.find_by_movie_api_id(params["movie_api_id"])
+    render json: @movie
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_movie
@@ -52,6 +61,6 @@ class MoviesController < ApplicationController
 
     # Only allow a trusted parameter "white list" through.
     def movie_params
-      params.require(:movie).permit(:title, :image, :year, :genre, :rating, :popularity, :video)
+      params.require(:movie).permit(:title, :image, :year, :genre, :rating, :popularity, :video, :movie_api_id)
     end
 end
