@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :comments
   scope :api do
     resources :watchlists
     resources :reviews

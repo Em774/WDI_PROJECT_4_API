@@ -1,3 +1,4 @@
+Comment.destroy_all
 Review.destroy_all
 Watchlist.destroy_all
 Movie.destroy_all
